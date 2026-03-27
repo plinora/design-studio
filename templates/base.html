@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дизайн-студия {% block title %}{% endblock %}</title>
+    <style>
+        /* ========== ПЕРЕМЕННЫЕ - ПАСТЕЛЬНАЯ КОРИЧНЕВАЯ ГАММА ========== */
+        :root {
+            --bg: #fdf8f0;
+            --sand: #e8d9c4;
+            --terracotta: #c97e5a;
+            --brown-light: #b87c4f;
+            --brown: #9b6a3e;
+            --brown-dark: #7b4a2a;
+            --brown-deep: #5a3a24;
+            --cream: #fff9f0;
+            --white: #ffffff;
+            --success: #7c9e6e;
+            --warning: #e2b870;
+            --danger: #d48c6c;
+            --border: #ecd9c6;
+            --shadow: 0 4px 20px rgba(90, 58, 36, 0.06);
+            --shadow-hover: 0 8px 30px rgba(90, 58, 36, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--brown-deep);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ========== ШАПКА ========== */
+        .header {
+            background: rgba(255, 249, 240, 0.95);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            background: linear-gradient(135deg, var(--brown) 0%, var(--brown-light) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .nav {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--brown-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav a:hover {
+            color: var(--brown);
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--brown), var(--brown-light));
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        .admin-link {
+            background: var(--brown-dark) !important;
+            color: white !important;
+            padding: 8px 20px !important;
+            border-radius: 50px !important;
+        }
+
+        .admin-link:hover {
+            background: var(--brown) !important;
+            transform: translateY(-2px);
+        }
+
+        .admin-link::after {
+            display: none !important;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--cream);
+            padding: 6px 20px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--brown-dark);
+        }
+
+        .user-role {
+            background: var(--brown-light);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .logout-btn-form {
+            background: linear-gradient(135deg, var(--brown-dark), var(--brown));
+            color: white;
+            padding: 6px 18px;
+            border-radius: 100px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn-form:hover {
+            background: linear-gradient(135deg, var(--brown), var(--brown-light));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(123, 74, 42, 0.3);
+        }
+
+        /* ========== ОСНОВНОЙ КОНТЕНТ ========== */
+        .main {
+            min-height: calc(100vh - 200px);
+            padding: 48px 0;
+        }
+
+        /* ========== КАРТОЧКИ ========== */
+        .card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card h3 {
+            color: var(--brown-dark);
+            margin-bottom: 16px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        /* ========== КНОПКИ ========== */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            background: var(--brown);
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--brown-dark), var(--brown));
+            box-shadow: 0 2px 8px rgba(123, 74, 42, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--brown), var(--brown-light));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(123, 74, 42, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--brown);
+            color: var(--brown-dark);
+        }
+
+        .btn-outline:hover {
+            background: var(--brown);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ========== СТАТУСЫ ========== */
+        .status {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-draft { background: #f3e5d8; color: var(--brown-dark); }
+        .status-in_progress { background: #fef3c7; color: #b86b2c; }
+        .status-review { background: #ffe4e0; color: var(--terracotta); }
+        .status-completed { background: #e6f4ea; color: var(--success); }
+        .status-todo { background: #f3e5d8; color: var(--brown-dark); }
+        .status-done { background: #e6f4ea; color: var(--success); }
+
+        /* ========== СЕТКА ========== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 28px;
+        }
+
+        /* ========== ФОРМЫ ========== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--brown-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--brown);
+            box-shadow: 0 0 0 3px rgba(155, 106, 62, 0.1);
+        }
+
+        /* ========== ФУТЕР ========== */
+        .footer {
+            background: linear-gradient(135deg, var(--brown-deep), var(--brown-dark));
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 32px 0;
+            margin-top: 60px;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ========== ЗАГОЛОВКИ ========== */
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--brown-deep), var(--brown));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+
+        /* ========== СООБЩЕНИЯ ========== */
+        .messages {
+            margin-bottom: 28px;
+        }
+
+        .alert {
+            padding: 14px 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #e6f4ea;
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .alert-error {
+            background: #ffe4e0;
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+
+        /* ========== АДАПТИВНОСТЬ ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav {
+                justify-content: center;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+
+        /* ========== АНИМАЦИИ ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        /* ========== КАНБАН-ДОСКА ========== */
+        .kanban-board {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .kanban-column {
+            min-width: 320px;
+            background: var(--cream);
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .kanban-column h3 {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--brown);
+            color: var(--brown-dark);
+        }
+
+        .kanban-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .kanban-card:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .kanban-card h4 {
+            color: var(--brown-dark);
+            margin-bottom: 8px;
+        }
+
+        .task-deadline {
+            font-size: 12px;
+            color: var(--terracotta);
+            margin-top: 10px;
+        }
+
+        .task-project {
+            font-size: 12px;
+            color: var(--brown);
+            margin-top: 8px;
+        }
+
+        .dragging {
+            opacity: 0.5;
+        }
+
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .task-count {
+            background: var(--brown);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">🎨 Дизайн-студия</a>
+                <div class="nav">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'projects' %}">Проекты</a>
+                        {% if user.is_designer or user.is_manager or user.is_admin %}
+                            <a href="{% url 'kanban' %}">Канбан-доска</a>
+                        {% endif %}
+                        {% if user.is_admin %}
+                            <a href="/admin/" class="admin-link">⚙️ Админ-панель</a>
+                        {% endif %}
+                        <div class="user-info">
+                            <span class="user-name">{{ user.get_full_name|default:user.username }}</span>
+                            <span class="user-role">{{ user.get_role_display }}</span>
+                            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-btn-form">Выйти</button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}">Вход</a>
+                        <a href="{% url 'register' %}">Регистрация</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Дизайн-студия — создаем уникальные решения для вашего бизнеса</p>
+            <p style="margin-top: 12px; font-size: 14px;">© 2026 Все права защищены</p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

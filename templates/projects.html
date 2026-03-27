@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои проекты{% endblock %}
+
+{% block content %}
+<h1>Мои проекты</h1>
+<p style="margin-bottom: 20px;">Список всех ваших проектов</p>
+
+<div class="grid">
+    {% for project in projects %}
+    <div class="card">
+        <h3>{{ project.title }}</h3>
+        <p><strong>Статус:</strong>
+            <span class="status status-{{ project.status }}">
+                {% if project.status == 'draft' %}Черновик
+                {% elif project.status == 'in_progress' %}В работе
+                {% elif project.status == 'review' %}На согласовании
+                {% elif project.status == 'completed' %}Завершен
+                {% elif project.status == 'cancelled' %}Отменен
+                {% endif %}
+            </span>
+        </p>
+        <p><strong>Тип:</strong>
+            {% if project.project_type == 'branding' %}Брендинг
+            {% elif project.project_type == 'web_design' %}Веб-дизайн
+            {% elif project.project_type == 'print' %}Полиграфия
+            {% elif project.project_type == 'interior' %}Интерьеры
+            {% elif project.project_type == 'ui_ux' %}UI/UX дизайн
+            {% else %}Другое
+            {% endif %}
+        </p>
+        <p><strong>Дедлайн:</strong> {{ project.deadline|date:"d.m.Y" }}</p>
+        <p><strong>Бюджет:</strong> {{ project.budget }} ₽</p>
+        <p><strong>Менеджер:</strong> {{ project.manager.get_full_name|default:project.manager.username }}</p>
+        <a href="/projects/{{ project.id }}/" class="btn btn-primary" style="margin-top: 10px;">Подробнее</a>
+    </div>
+    {% empty %}
+    <div class="card">
+        <p>У вас пока нет проектов.</p>
+        {% if user.is_manager %}
+        <a href="/admin/projects/project/add/" class="btn btn-primary">Создать проект</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

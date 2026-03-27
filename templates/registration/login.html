@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 0 auto;">
+    <div class="card">
+        <h2 style="text-align: center; margin-bottom: 20px;">Вход в систему</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px;">Имя пользователя:</label>
+                <input type="text" name="username" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px;">Пароль:</label>
+                <input type="password" name="password" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+
+            {% if form.errors %}
+                <div class="alert alert-error" style="margin-bottom: 15px;">
+                    Неверное имя пользователя или пароль
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Войти</button>
+        </form>
+
+        <p style="text-align: center; margin-top: 15px;">
+            Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
