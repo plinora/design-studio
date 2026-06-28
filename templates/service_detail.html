@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service.title }}{% endblock %}
+
+{% block content %}
+<div style="max-width: 960px; margin: 0 auto;">
+
+    <a href="{% url 'services_list' %}" style="color: #7c3aed; text-decoration: none; font-weight: 500; display: inline-block; margin-bottom: 24px;">
+        ← Назад к каталогу
+    </a>
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 40px;">
+
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+            <div>
+                <h1 style="font-size: 36px; font-weight: 700; color: #111827; letter-spacing: -1px; margin-bottom: 4px;">
+                    {{ service.title }}
+                </h1>
+                <p style="color: #6b7280; font-size: 16px; margin-bottom: 20px;">
+                    {{ service.get_sphere_display }} • {{ service.price }} ₽
+                </p>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px;">
+            {% for image in service.images.all %}
+                <img src="{{ image.image.url }}" alt="{{ service.title }}" style="width: 140px; height: 140px; object-fit: cover; border-radius: 16px; border: 1px solid #e5e7eb;">
+            {% empty %}
+                <div style="color: #9ca3af; font-size: 14px;">Нет изображений</div>
+            {% endfor %}
+        </div>
+
+        <div style="margin-bottom: 32px;">
+            <h3 style="font-size: 18px; font-weight: 600; color: #111827; margin-bottom: 8px;">Описание</h3>
+            <p style="color: #4b5563; font-size: 16px; line-height: 1.7;">
+                {{ service.description }}
+            </p>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid #f3f4f6;">
+
+            {% if user == service.designer %}
+                <a href="{% url 'edit_service' service.id %}" style="display: inline-block; padding: 10px 28px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: 0.2s ease; background: #7c3aed; color: #fff; text-decoration: none;">
+                    Редактировать
+                </a>
+                <a href="{% url 'delete_service' service.id %}" style="display: inline-block; padding: 10px 28px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: 0.2s ease; background: #dc2626; color: #fff; text-decoration: none;">
+                    Удалить
+                </a>
+
+            {% elif user.is_admin %}
+                <a href="{% url 'delete_service' service.id %}" style="display: inline-block; padding: 10px 28px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: 0.2s ease; background: #dc2626; color: #fff; text-decoration: none;">
+                    Удалить объявление
+                </a>
+                <a href="{% url 'chat_detail' service.designer.id %}" style="display: inline-block; padding: 10px 28px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: 0.2s ease; background: #7c3aed; color: #fff; text-decoration: none;">
+                    Написать дизайнеру
+                </a>
+
+            {% elif user.role == 'client' %}
+                <a href="{% url 'add_favorite' service.id %}" style="display: inline-block; padding: 10px 28px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: 0.2s ease; background: #7c3aed; color: #fff; text-decoration: none;">
+                    В избранное
+                </a>
+                <a href="{% url 'respond_to_service' service.id %}" style="display: inline-block; padding: 10px 28px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: 0.2s ease; background: #10b981; color: #fff; text-decoration: none;">
+                    Откликнуться
+                </a>
+                <a href="{% url 'complain' service.id %}" style="background: #fef2f2; border: 1px solid #fca5a5; padding: 10px 28px; border-radius: 40px; text-decoration: none; color: #dc2626; font-weight: 500; transition: 0.2s;">
+                    Пожаловаться
+                </a>
+
+            {% else %}
+                <a href="{% url 'chat_detail' service.designer.id %}" style="display: inline-block; padding: 10px 28px; border-radius: 40px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: 0.2s ease; background: #7c3aed; color: #fff; text-decoration: none;">
+                    Написать дизайнеру
+                </a>
+                <a href="{% url 'complain' service.id %}" style="background: #fef2f2; border: 1px solid #fca5a5; padding: 10px 28px; border-radius: 40px; text-decoration: none; color: #dc2626; font-weight: 500; transition: 0.2s;">
+                    Пожаловаться
+                </a>
+            {% endif %}
+        </div>
+
+        {% if user != service.designer %}
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #f3f4f6;">
+                <p style="color: #6b7280; font-size: 14px;">
+                    Дизайнер: <strong>{{ service.designer.get_full_name|default:service.designer.username }}</strong>
+                </p>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

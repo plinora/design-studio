@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить объявление{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 0 auto; text-align: center;">
+
+    <h1 style="font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 8px;">
+        Удалить объявление?
+    </h1>
+    <p style="color: #6b7280; margin-bottom: 24px;">
+        Вы уверены, что хотите удалить «{{ service.title }}»?
+    </p>
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px;">
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" style="display: inline-block; padding: 12px 30px; border-radius: 40px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s ease; background: #dc2626; color: #fff; width: 100%;">
+                Да, удалить
+            </button>
+        </form>
+
+        <div style="margin-top: 16px;">
+            <a href="{% url 'service_detail' service.id %}" style="color: #7c3aed; text-decoration: none;">
+                ← Вернуться к объявлению
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

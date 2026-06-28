@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Пожаловаться{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+    <h1 style="font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 8px;">Пожаловаться на объявление</h1>
+    <p style="color: #6b7280; margin-bottom: 24px;">Опишите причину жалобы</p>
+    <form method="post" style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 32px;">
+        {% csrf_token %}
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Причина жалобы *</label>
+            <textarea name="reason" rows="5" required placeholder="Опишите, что вас не устраивает..." style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 14px;"></textarea>
+        </div>
+        <button type="submit" style="display: inline-block; padding: 12px 30px; border-radius: 40px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s ease; background: #dc2626; color: #fff; width: 100%;">
+            Отправить жалобу
+        </button>
+    </form>
+    <div style="margin-top: 16px;">
+        <a href="{% url 'service_detail' service.id %}" style="color: #7c3aed; text-decoration: none;">← Назад к объявлению</a>
+    </div>
+</div>
+{% endblock %}

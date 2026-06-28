@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Чаты{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+
+    <h1 style="font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 4px;">
+        Чаты
+        {% if unread_count > 0 %}
+            <span style="background: #dc2626; color: #fff; font-size: 14px; padding: 2px 12px; border-radius: 50%; margin-left: 8px;">{{ unread_count }}</span>
+        {% endif %}
+    </h1>
+    <p style="color: #6b7280; margin-bottom: 32px;">
+        Ваши диалоги
+    </p>
+
+    {% if chats %}
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            {% for chat in chats %}
+                <a href="{% url 'chat_detail' chat.id %}" style="display: flex; align-items: center; gap: 16px; padding: 18px 24px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 20px; text-decoration: none; color: #111827; transition: all 0.2s;">
+
+                    <div style="position: relative; width: 48px; height: 48px; flex-shrink: 0;">
+                        <div style="width: 48px; height: 48px; background: #7c3aed; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px;">
+                            {{ chat.username|make_list|first|upper }}
+                        </div>
+                        {% if chat.last_seen and chat.last_seen|date:"U" > now|date:"U"|add:"-300" %}
+                            <div style="position: absolute; bottom: 0; right: 0; width: 14px; height: 14px; background: #10b981; border-radius: 50%; border: 2px solid #fff;"></div>
+                        {% endif %}
+                    </div>
+
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; font-size: 16px;">
+                            {{ chat.get_full_name|default:chat.username }}
+                        </div>
+                        <div style="font-size: 14px; color: #6b7280;">
+                            {{ chat.get_role_display }}
+                        </div>
+                    </div>
+
+                    <!-- ===== ЗЕЛЁНОЕ УВЕДОМЛЕНИЕ ===== -->
+                    {% if chat.id in unread_chat_ids %}
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span style="background: #10b981; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 50%;">!</span>
+                            <span style="color: #10b981; font-size: 13px; font-weight: 500;">Новое</span>
+                        </div>
+                    {% endif %}
+
+                    <div style="color: #7c3aed; font-weight: 500; font-size: 15px;">
+                        Написать →
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 60px 20px; background: #f9fafb; border-radius: 24px;">
+            <p style="color: #6b7280; font-size: 18px; margin-bottom: 0;">
+                У вас пока нет активных чатов
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

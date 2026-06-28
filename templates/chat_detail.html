@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block title %}Чат{% endblock %}
+
+{% block content %}
+<div style="max-width: 700px; margin: 0 auto;">
+
+    <a href="{% url 'chats_list' %}" style="color: #7c3aed; text-decoration: none; font-weight: 500; display: inline-block; margin-bottom: 24px;">
+        ← Назад к чатам
+    </a>
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px;">
+
+        <!-- ===== ИНФО О СОБЕСЕДНИКЕ ===== -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 28px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <div style="position: relative; width: 48px; height: 48px; flex-shrink: 0;">
+                    <div style="width: 48px; height: 48px; background: #7c3aed; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px;">
+                        {{ designer.username|make_list|first|upper }}
+                    </div>
+                    {% if designer.last_seen and designer.last_seen|date:"U" > now|date:"U"|add:"-300" %}
+                        <div style="position: absolute; bottom: 0; right: 0; width: 14px; height: 14px; background: #10b981; border-radius: 50%; border: 2px solid #fff;"></div>
+                    {% endif %}
+                </div>
+                <div>
+                    <h2 style="font-size: 20px; font-weight: 600; color: #111827; margin-bottom: 2px;">
+                        {{ designer.get_full_name|default:designer.username }}
+                    </h2>
+                    <p style="color: #6b7280; font-size: 14px;">
+                        {% if designer.last_seen %}
+                            {% if designer.last_seen|date:"U" > now|date:"U"|add:"-300" %}
+                                <span style="color: #10b981;">в сети</span>
+                            {% else %}
+                                был(а) в сети {{ designer.last_seen|date:"d.m.Y H:i" }}
+                            {% endif %}
+                        {% else %}
+                            статус не известен
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <a href="{% url 'delete_chat' designer.id %}"
+               style="display: inline-block; padding: 8px 20px; border-radius: 30px; border: 1px solid #dc2626; font-size: 13px; font-weight: 500; cursor: pointer; background: transparent; color: #dc2626; text-decoration: none;"
+               onclick="return confirm('Точно удалить весь чат?')">
+               Удалить чат
+            </a>
+        </div>
+
+        <!-- ===== СТАТУС ЗАКАЗА ===== -->
+        {% if order %}
+            <div style="background: #f3f4f6; padding: 12px 20px; border-radius: 16px; margin-bottom: 20px; font-size: 14px; color: #111827;">
+                {% if order.status == 'thinking' %}
+                    Думаете над проектом
+                {% elif order.status == 'paid' %}
+                    Оплачен
+                {% elif order.status == 'in_progress' %}
+                    В разработке
+                {% elif order.status == 'ready' %}
+                    Готово
+                {% elif order.status == 'completed' %}
+                    Завершён
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <!-- ===== СООБЩЕНИЯ ===== -->
+        <div style="min-height: 320px; background: #f9fafb; border-radius: 20px; padding: 24px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px;">
+            {% for msg in messages_list %}
+                <div style="
+                    max-width: 80%;
+                    padding: 10px 16px;
+                    border-radius: 16px;
+                    align-self: {% if msg.sender == request.user %}flex-end; background: #7c3aed; color: #fff;{% else %}flex-start; background: #e5e7eb; color: #111827;{% endif %}
+                ">
+                    {{ msg.text }}
+                    {% if msg.file %}
+                        <a href="{{ msg.file.url }}" target="_blank" style="display: block; color: #7c3aed; font-size: 13px; margin-top: 4px;">
+                            📎 Скачать файл
+                        </a>
+                    {% endif %}
+                    {% if msg.image %}
+                        <img src="{{ msg.image.url }}" alt="Изображение" style="max-width: 200px; max-height: 200px; border-radius: 12px; margin-top: 4px;">
+                    {% endif %}
+                    <div style="font-size: 10px; color: {% if msg.sender == request.user %}#d1d5db{% else %}#6b7280{% endif %}; margin-top: 4px;">
+                        {{ msg.created_at|date:"d.m.Y H:i" }}
+                    </div>
+                </div>
+            {% empty %}
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #6b7280; font-size: 15px;">
+                    Сообщений пока нет
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- ===== КНОПКИ ДЛЯ КЛИЕНТА ===== -->
+        {% if user.role == 'client' and designer.role == 'designer' and order %}
+            {% if order.status == 'thinking' %}
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <a href="{% url 'pay_order' order.id %}" style="display: inline-block; padding: 10px 24px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #10b981; color: #fff; text-decoration: none;">
+                        Оплатить
+                    </a>
+                </div>
+            {% elif order.status == 'ready' %}
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <a href="{% url 'confirm_complete_client' order.id %}" style="display: inline-block; padding: 10px 24px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #7c3aed; color: #fff; text-decoration: none;">
+                        Всё отлично, заказ выполнен
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!-- ===== КНОПКИ ДЛЯ ДИЗАЙНЕРА ===== -->
+        {% if user.role == 'designer' and designer.role == 'client' and order %}
+            {% if order.status == 'paid' %}
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <a href="{% url 'start_work' order.id %}" style="display: inline-block; padding: 10px 24px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #f59e0b; color: #fff; text-decoration: none;">
+                        Проект в разработке
+                    </a>
+                </div>
+            {% elif order.status == 'in_progress' %}
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <a href="{% url 'send_project' order.id %}" style="display: inline-block; padding: 10px 24px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #7c3aed; color: #fff; text-decoration: none;">
+                        Отправить проект
+                    </a>
+                </div>
+            {% elif order.status == 'ready' %}
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <a href="{% url 'confirm_complete_designer' order.id %}" style="display: inline-block; padding: 10px 24px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #10b981; color: #fff; text-decoration: none;">
+                        Подтверждаю выполнение
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!-- ===== ОТМЕНА ЗАКАЗА (для обоих, если заказ не завершён) ===== -->
+{% if order and order.status != 'completed' and order.status != 'cancelled' %}
+    <div style="margin-top: 12px;">
+        <a href="{% url 'cancel_order' order.id %}"
+           style="display: inline-block; padding: 8px 20px; border-radius: 30px; border: 1px solid #dc2626; font-size: 13px; font-weight: 500; cursor: pointer; background: transparent; color: #dc2626; text-decoration: none;"
+           onclick="return confirm('Точно отменить заказ? Деньги вернутся на баланс (если были списаны).')">
+           Отменить заказ
+        </a>
+    </div>
+{% endif %}
+
+        <!-- ===== ФОРМА ОТПРАВКИ (С ФАЙЛАМИ) ===== -->
+        <form method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+            {% csrf_token %}
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <input type="text" name="message" placeholder="Введите сообщение..." style="flex: 1; padding: 12px 20px; border: 1px solid #e5e7eb; border-radius: 40px; background: #f9fafb; font-size: 14px;">
+                <button type="submit" style="display: inline-block; padding: 12px 28px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #7c3aed; color: #fff;">
+                    Отправить
+                </button>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <label style="background: #f3f4f6; padding: 6px 16px; border-radius: 30px; cursor: pointer; font-size: 13px;">
+                    📎 Прикрепить файл
+                    <input type="file" name="file" style="display: none;">
+                </label>
+                <label style="background: #f3f4f6; padding: 6px 16px; border-radius: 30px; cursor: pointer; font-size: 13px;">
+                    🖼 Прикрепить изображение
+                    <input type="file" name="image" accept="image/*" style="display: none;">
+                </label>
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

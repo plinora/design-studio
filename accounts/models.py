@@ -3,50 +3,35 @@ from django.db import models
 
 
 class User(AbstractUser):
-    """Расширенная модель пользователя"""
+    ROLE_CHOICES = [
+        ('admin', 'Администратор'),
+        ('designer', 'Дизайнер'),
+        ('client', 'Клиент'),
+    ]
 
-    class Role(models.TextChoices):
-        ADMIN = 'admin', 'Администратор'
-        MANAGER = 'manager', 'Менеджер'
-        DESIGNER = 'designer', 'Дизайнер'
-        CLIENT = 'client', 'Клиент'
-
-    role = models.CharField(
-        max_length=20,
-        choices=Role.choices,
-        default=Role.CLIENT,
-        verbose_name='Роль'
-    )
-    phone = models.CharField(max_length=20, blank=True, verbose_name='Телефон')
-    avatar = models.ImageField(
-        upload_to='avatars/',
-        blank=True,
-        null=True,
-        verbose_name='Аватар'
-    )
-    bio = models.TextField(blank=True, verbose_name='О себе')
-    company = models.CharField(max_length=200, blank=True, verbose_name='Компания')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата регистрации')
-
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='client')
+    phone = models.CharField(max_length=20, blank=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    bio = models.TextField(blank=True)
+    company = models.CharField(max_length=200, blank=True)
+    gender = models.CharField(max_length=10, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_seen = models.DateTimeField(null=True, blank=True)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Баланс (руб)')
 
     def __str__(self):
-        return f"{self.get_full_name() or self.username} ({self.get_role_display()})"
+        return self.username
 
     @property
     def is_admin(self):
-        return self.role == self.Role.ADMIN
-
-    @property
-    def is_manager(self):
-        return self.role == self.Role.MANAGER
+        return self.role == 'admin'
 
     @property
     def is_designer(self):
-        return self.role == self.Role.DESIGNER
+        return self.role == 'designer'
 
     @property
     def is_client(self):
-            return self.role == self.Role.CLIENT
+        return self.role == 'client'

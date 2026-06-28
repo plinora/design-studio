@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Отправить проект{% endblock %}
+
+{% block content %}
+<div style="max-width: 640px; margin: 0 auto;">
+
+    <h1 style="font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 4px;">
+        Отправить проект
+    </h1>
+    <p style="color: #6b7280; margin-bottom: 24px;">
+        Заказ #{{ order.id }} — {{ order.service.title|default:"Без услуги" }}
+    </p>
+
+    <form method="post" enctype="multipart/form-data" style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 36px;">
+        {% csrf_token %}
+
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Результат работы *</label>
+            <textarea name="result" rows="6" required placeholder="Опишите результат работы, добавьте ссылки..." style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 14px;"></textarea>
+        </div>
+
+        <!-- ===== ЗАГРУЗКА ФАЙЛОВ ===== -->
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Прикрепить файлы (изображения, видео, документы)</label>
+            <input type="file" name="files" multiple accept="image/*,video/*,.pdf,.doc,.docx,.zip,.rar" style="width: 100%; padding: 10px 14px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 14px;">
+            <small style="color: #6b7280; font-size: 12px;">Можно выбрать несколько файлов</small>
+        </div>
+
+        <button type="submit" style="display: inline-block; padding: 12px 30px; border-radius: 40px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s ease; background: #7c3aed; color: #fff; width: 100%;">
+            Отправить проект
+        </button>
+    </form>
+
+    <div style="margin-top: 16px;">
+        <a href="{% url 'chat_detail' order.client.id %}" style="color: #7c3aed; text-decoration: none;">
+            ← Назад к чату
+        </a>
+    </div>
+</div>
+{% endblock %}

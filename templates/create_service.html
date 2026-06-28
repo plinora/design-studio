@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Создать объявление{% endblock %}
+
+{% block content %}
+<div style="max-width: 640px; margin: 0 auto;">
+
+    <h1 style="font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 4px;">
+        Новое объявление
+    </h1>
+    <p style="color: #6b7280; margin-bottom: 24px;">
+        Заполните форму, чтобы разместить услугу
+    </p>
+
+    <form method="post" enctype="multipart/form-data" style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 36px;">
+        {% csrf_token %}
+
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Название услуги *</label>
+            <input type="text" name="title" required style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 14px;">
+        </div>
+
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Сфера *</label>
+            <select name="sphere" required style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 14px;">
+                <option value="branding">Брендинг</option>
+                <option value="web">Веб-дизайн</option>
+                <option value="graphic">Графический дизайн</option>
+                <option value="interior">Интерьеры</option>
+                <option value="other">Другое</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Описание *</label>
+            <textarea name="description" rows="5" required style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 14px;"></textarea>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Цена (₽)</label>
+            <input type="number" name="price" value="0" style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 14px;">
+        </div>
+
+        <!-- ===== ЗАГРУЗКА ФОТО (до 3 шт) ===== -->
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Фотографии (до 3 шт)</label>
+            <input type="file" name="images" multiple accept="image/*" style="width: 100%; padding: 10px 14px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 14px;">
+            <small style="color: #6b7280; font-size: 12px;">Можно выбрать до 3 изображений. Первое будет отображаться в каталоге.</small>
+        </div>
+
+        <button type="submit" style="display: inline-block; padding: 12px 30px; border-radius: 40px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s ease; background: #7c3aed; color: #fff; width: 100%;">
+            Опубликовать объявление
+        </button>
+    </form>
+
+    <div style="margin-top: 16px;">
+        <a href="{% url 'my_services' %}" style="color: #7c3aed; text-decoration: none;">
+            ← Назад к моим объявлениям
+        </a>
+    </div>
+</div>
+{% endblock %}

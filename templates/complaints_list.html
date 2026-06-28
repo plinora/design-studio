@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Жалобы{% endblock %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: 0 auto;">
+
+    <h1 style="font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 8px;">
+        Жалобы на объявления
+    </h1>
+    <p style="color: #6b7280; margin-bottom: 32px;">
+        Список всех активных жалоб
+    </p>
+
+    {% if complaints %}
+        {% for complaint in complaints %}
+        <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #111827;">
+                        {{ complaint.service.title }}
+                    </h3>
+                    <p style="color: #6b7280; font-size: 14px;">
+                        Дизайнер: {{ complaint.service.designer.username }}
+                    </p>
+                    <p style="color: #6b7280; font-size: 14px;">
+                        Жалоба от: {{ complaint.user.username }}
+                    </p>
+                    <p style="color: #4b5563; font-size: 14px; margin-top: 8px; background: #f9fafb; padding: 8px 12px; border-radius: 8px;">
+                        <strong>Причина:</strong> {{ complaint.reason }}
+                    </p>
+                    <p style="color: #9ca3af; font-size: 12px; margin-top: 8px;">
+                        Дата: {{ complaint.created_at|date:"d.m.Y H:i" }}
+                    </p>
+                    <a href="{% url 'service_detail' complaint.service.id %}" style="color: #7c3aed; text-decoration: none; font-size: 14px; margin-top: 8px; display: inline-block;">
+                        Перейти к объявлению →
+                    </a>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="{% url 'complaint_action' complaint.id 'delete' %}"
+                       style="background: #dc2626; color: #fff; padding: 8px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500;"
+                       onclick="return confirm('Точно удалить объявление?')">
+                        Удалить объявление
+                    </a>
+                    <a href="{% url 'complaint_action' complaint.id 'reject' %}"
+                       style="background: #e5e7eb; color: #374151; padding: 8px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500;">
+                        Отклонить жалобу
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div style="text-align: center; padding: 60px 20px; background: #f9fafb; border-radius: 20px;">
+            <p style="color: #6b7280; font-size: 18px;">
+                Нет активных жалоб
+            </p>
+        </div>
+    {% endif %}
+
+    <div style="margin-top: 24px;">
+        <a href="{% url 'services_list' %}" style="color: #7c3aed; text-decoration: none;">
+            ← Назад к каталогу
+        </a>
+    </div>
+</div>
+{% endblock %}

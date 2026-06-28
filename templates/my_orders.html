@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои заказы{% endblock %}
+
+{% block content %}
+<div style="max-width: 1200px; margin: 0 auto;">
+
+    <h1 style="font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 4px;">
+        Мои заказы
+    </h1>
+    <p style="color: #6b7280; margin-bottom: 32px;">
+        Список всех ваших заказов
+    </p>
+
+    {% if orders %}
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            {% for order in orders %}
+            <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #111827;">
+                        Заказ #{{ order.id }}
+                    </h3>
+                    <p style="color: #6b7280; font-size: 14px;">
+                        Услуга: {{ order.service.title|default:"Без услуги" }}
+                    </p>
+                    <p style="color: #6b7280; font-size: 14px;">
+                        Дизайнер: {{ order.designer.username }}
+                    </p>
+                    <p style="color: #6b7280; font-size: 14px;">
+                        Клиент: {{ order.client.username }}
+                    </p>
+                    <p style="color: #4b5563; font-size: 14px;">
+                        Сумма: {{ order.price }} ₽
+                    </p>
+
+                    {% if order.result %}
+                        <p style="color: #111827; font-size: 14px; margin-top: 8px; background: #f9fafb; padding: 8px 12px; border-radius: 8px;">
+                            <strong>Результат:</strong> {{ order.result }}
+                        </p>
+                    {% endif %}
+
+                    <!-- ===== ФАЙЛЫ ИЗ ЧАТА ===== -->
+                    {% for msg in order.messages.all %}
+                        {% if msg.file %}
+                            <div style="margin-top: 4px;">
+                                <a href="{{ msg.file.url }}" target="_blank" style="color: #7c3aed; font-size: 13px;">
+                                    📎 Скачать файл: {{ msg.file.name|slice:"12:" }}
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% if msg.image %}
+                            <div style="margin-top: 4px;">
+                                <a href="{{ msg.image.url }}" target="_blank" style="color: #7c3aed; font-size: 13px;">
+                                    🖼 Смотреть изображение
+                                </a>
+                                <br>
+                                <img src="{{ msg.image.url }}" alt="Изображение" style="max-width: 150px; max-height: 150px; border-radius: 8px; margin-top: 4px;">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <p style="color: #9ca3af; font-size: 12px; margin-top: 8px;">
+                        Создан: {{ order.created_at|date:"d.m.Y H:i" }}
+                    </p>
+                </div>
+
+                <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                    <span style="display: inline-block; padding: 4px 16px; border-radius: 30px; font-size: 13px; font-weight: 500;
+                        {% if order.status == 'thinking' %}background: #fef3c7; color: #92400e;
+                        {% elif order.status == 'paid' %}background: #dbeafe; color: #1e40af;
+                        {% elif order.status == 'in_progress' %}background: #ede9fe; color: #7c3aed;
+                        {% elif order.status == 'ready' %}background: #d1fae5; color: #065f46;
+                        {% elif order.status == 'completed' %}background: #d1fae5; color: #065f46;
+                        {% elif order.status == 'cancelled' %}background: #f3f4f6; color: #6b7280;
+                        {% elif order.status == 'cancelled' %}
+                        Отменён
+                        {% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                    <a href="{% url 'chat_detail' order.designer.id %}" style="background: #7c3aed; color: #fff; padding: 6px 18px; border-radius: 30px; text-decoration: none; font-size: 13px;">
+                        Перейти в чат
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 60px 20px; background: #f9fafb; border-radius: 20px;">
+            <p style="color: #6b7280; font-size: 18px;">
+                У вас пока нет заказов
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

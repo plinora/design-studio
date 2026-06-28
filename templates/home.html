@@ -3,121 +3,210 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-<!-- Приветственный блок -->
-<div style="text-align: center; margin-bottom: 40px; padding: 40px 0;">
-    <h1 style="font-size: 48px; margin-bottom: 16px;">Дизайн-студия</h1>
-    <p style="font-size: 18px; color: #7b4a2a;">Создаем уникальные решения для вашего бизнеса</p>
+<div style="max-width: 1000px; margin: 0 auto;">
+
+    <!-- ====== БЛОК 1: ЗАГОЛОВОК ====== -->
+    <div style="text-align: center; padding: 60px 0 20px;">
+        <h1 style="
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            color: #111827;
+            margin-bottom: 16px;
+        ">
+            Дизайн-платформа<br>
+            <span style="color: #7c3aed;">DESIGN LAB</span>
+        </h1>
+        <p style="
+            font-size: 20px;
+            color: #4b5563;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-weight: 400;
+        ">
+            Находите дизайнеров или продавайте свои услуги<br>
+            с гарантией безопасности
+        </p>
+    </div>
+
+    <!-- ====== БЛОК 2: ПРИЧИНЫ ДОВЕРЯТЬ ====== -->
+    <div style="
+        background: #f9fafb;
+        border-radius: 24px;
+        padding: 48px 40px;
+        margin-bottom: 48px;
+        border: 1px solid #e5e7eb;
+    ">
+        <h2 style="
+            font-size: 28px;
+            font-weight: 600;
+            color: #111827;
+            text-align: center;
+            margin-bottom: 32px;
+        ">
+            Почему вам стоит доверять нам
+        </h2>
+
+        <div style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            max-width: 800px;
+            margin: 0 auto;
+        ">
+            <div>
+                <h3 style="
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #111827;
+                    margin-bottom: 6px;
+                ">
+                    Безопасная оплата
+                </h3>
+                <p style="color: #4b5563; font-size: 15px;">
+                    Деньги замораживаются на счёте и передаются дизайнеру<br>
+                    <strong>только после полного выполнения заказа</strong>.
+                </p>
+            </div>
+            <div>
+                <h3 style="
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #111827;
+                    margin-bottom: 6px;
+                ">
+                    Проверенные дизайнеры
+                </h3>
+                <p style="color: #4b5563; font-size: 15px;">
+                    Каждый специалист проходит модерацию.<br>
+                    Вы видите портфолио и отзывы перед заказом.
+                </p>
+            </div>
+            <div>
+                <h3 style="
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #111827;
+                    margin-bottom: 6px;
+                ">
+                    Прямая коммуникация
+                </h3>
+                <p style="color: #4b5563; font-size: 15px;">
+                    Вы общаетесь с дизайнером напрямую через встроенный чат.<br>
+                    Все детали обсуждаются лично.
+                </p>
+            </div>
+            <div>
+                <h3 style="
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #111827;
+                    margin-bottom: 6px;
+                ">
+                    Никаких скрытых комиссий
+                </h3>
+                <p style="color: #4b5563; font-size: 15px;">
+                    Платформа не берёт комиссию.<br>
+                    Вы платите только за работу дизайнера.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== БЛОК 3: КТО МЫ ====== -->
+    <div style="
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 48px;
+        padding: 0 20px;
+    ">
+        <div>
+            <h2 style="
+                font-size: 26px;
+                font-weight: 600;
+                color: #111827;
+                margin-bottom: 16px;
+            ">
+                Для клиентов
+            </h2>
+            <ul style="
+                list-style: none;
+                padding: 0;
+                color: #4b5563;
+                font-size: 15px;
+                line-height: 2;
+            ">
+                <li>— Найдите дизайнера под вашу задачу</li>
+                <li>— Оцените портфолио до начала работы</li>
+                <li>— Деньги замораживаются до результата</li>
+                <li>— Чат с дизайнером в реальном времени</li>
+            </ul>
+        </div>
+        <div>
+            <h2 style="
+                font-size: 26px;
+                font-weight: 600;
+                color: #111827;
+                margin-bottom: 16px;
+            ">
+                Для дизайнеров
+            </h2>
+            <ul style="
+                list-style: none;
+                padding: 0;
+                color: #4b5563;
+                font-size: 15px;
+                line-height: 2;
+            ">
+                <li>— Разместите свои услуги и портфолио</li>
+                <li>— Получайте заказы от клиентов</li>
+                <li>— Гарантированная оплата после выполнения</li>
+                <li>— Работайте без посредников</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ====== БЛОК 4: КНОПКИ ====== -->
+    <div style="
+        text-align: center;
+        padding: 24px 0 48px;
+        border-top: 1px solid #f3f4f6;
+    ">
+        <p style="
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 24px;
+        ">
+            Присоединяйтесь к платформе
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'register' %}" class="btn" style="
+                background: #7c3aed;
+                color: #fff;
+                padding: 14px 40px;
+                border-radius: 40px;
+                font-weight: 600;
+                text-decoration: none;
+                transition: 0.2s;
+            ">
+                Зарегистрироваться
+            </a>
+            <a href="{% url 'login' %}" class="btn-outline" style="
+                background: transparent;
+                color: #111827;
+                padding: 14px 40px;
+                border-radius: 40px;
+                font-weight: 600;
+                text-decoration: none;
+                border: 1px solid #d1d5db;
+                transition: 0.2s;
+            ">
+                Войти
+            </a>
+        </div>
+    </div>
+
 </div>
-
-<!-- Панель для АДМИНИСТРАТОРА -->
-{% if user.is_authenticated and user.is_admin %}
-<div style="margin-top: 20px;">
-    <h2 style="text-align: center; margin-bottom: 24px;">👑 Панель администратора</h2>
-    <div class="grid">
-        <div class="card" style="background: linear-gradient(135deg, #fff9f0, #fdf8f0); border: 2px solid #b87c4f;">
-            <h3>⚙️ Администрирование</h3>
-            <p>Управление пользователями, ролями, проектами и задачами</p>
-            <a href="/admin/" class="btn btn-primary" style="margin-top: 16px; background: #7b4a2a; width: 100%; text-align: center;">Перейти в админ-панель →</a>
-        </div>
-
-        <div class="card">
-            <h3>📁 Управление проектами</h3>
-            <p>Создавайте и управляйте всеми проектами студии</p>
-            <a href="{% url 'projects' %}" class="btn btn-primary" style="margin-top: 16px;">Все проекты →</a>
-        </div>
-
-        <div class="card">
-            <h3>📋 Канбан-доска</h3>
-            <p>Визуальное управление задачами для всей команды</p>
-            <a href="{% url 'kanban' %}" class="btn btn-primary" style="margin-top: 16px;">Открыть доску →</a>
-        </div>
-
-        <div class="card">
-            <h3>👥 Пользователи</h3>
-            <p>Управление ролями и доступом сотрудников</p>
-            <a href="/admin/accounts/user/" class="btn btn-outline" style="margin-top: 16px;">Список пользователей →</a>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<!-- Панель для МЕНЕДЖЕРА -->
-{% if user.is_authenticated and user.is_manager and not user.is_admin %}
-<div style="margin-top: 48px;">
-    <h2 style="text-align: center; margin-bottom: 24px;">Добро пожаловать, {{ user.get_full_name|default:user.username }}!</h2>
-    <div class="grid">
-        <div class="card">
-            <h3>📁 Управление проектами</h3>
-            <p>Создавайте и управляйте проектами, назначайте задачи</p>
-            <a href="{% url 'projects' %}" class="btn btn-primary" style="margin-top: 16px;">Мои проекты →</a>
-        </div>
-        <div class="card">
-            <h3>📋 Канбан-доска</h3>
-            <p>Визуальное управление задачами для команды</p>
-            <a href="{% url 'kanban' %}" class="btn btn-primary" style="margin-top: 16px;">Открыть доску →</a>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<!-- Панель для ДИЗАЙНЕРА -->
-{% if user.is_authenticated and user.is_designer and not user.is_admin %}
-<div style="margin-top: 48px;">
-    <h2 style="text-align: center; margin-bottom: 24px;">Добро пожаловать, {{ user.get_full_name|default:user.username }}!</h2>
-    <div class="grid">
-        <div class="card">
-            <h3>✅ Мои задачи</h3>
-            <p>Просматривайте и выполняйте назначенные задачи</p>
-            <a href="{% url 'my_tasks' %}" class="btn btn-primary" style="margin-top: 16px;">К задачам →</a>
-        </div>
-        <div class="card">
-            <h3>📋 Канбан-доска</h3>
-            <p>Визуальное управление задачами</p>
-            <a href="{% url 'kanban' %}" class="btn btn-primary" style="margin-top: 16px;">Открыть доску →</a>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<!-- Панель для КЛИЕНТА -->
-{% if user.is_authenticated and user.is_client and not user.is_admin %}
-<div style="margin-top: 48px;">
-    <h2 style="text-align: center; margin-bottom: 24px;">Добро пожаловать, {{ user.get_full_name|default:user.username }}!</h2>
-    <div class="grid">
-        <div class="card">
-            <h3>📋 Мои проекты</h3>
-            <p>Отслеживайте статус ваших проектов</p>
-            <a href="{% url 'projects' %}" class="btn btn-primary" style="margin-top: 16px;">Перейти →</a>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<!-- Для НЕ авторизованных -->
-{% if not user.is_authenticated %}
-<div class="grid" style="margin-bottom: 40px;">
-    <div class="card">
-        <h3>🎨 О нас</h3>
-        <p>Мы — команда профессиональных дизайнеров. Наша миссия — делать мир красивее и удобнее.</p>
-    </div>
-    <div class="card">
-        <h3>✨ Наши услуги</h3>
-        <p>• Брендинг и айдентика<br>• Веб-дизайн и UI/UX<br>• Полиграфический дизайн<br>• Дизайн интерьеров</p>
-    </div>
-    <div class="card">
-        <h3>💡 Почему мы</h3>
-        <p>Индивидуальный подход, соблюдение сроков, прозрачная отчетность — наши главные принципы.</p>
-    </div>
-</div>
-
-<!-- Блок входа/регистрации -->
-<div class="card" style="text-align: center; background: linear-gradient(135deg, #fff9f0, #fdf8f0);">
-    <h3>Начать работу с нами</h3>
-    <p style="margin: 16px 0;">Войдите в систему, чтобы создать проект, назначить задачи или отслеживать статус работ</p>
-    <div style="display: flex; gap: 16px; justify-content: center;">
-        <a href="{% url 'login' %}" class="btn btn-primary">Войти</a>
-        <a href="{% url 'register' %}" class="btn btn-outline">Зарегистрироваться</a>
-    </div>
-</div>
-{% endif %}
 {% endblock %}

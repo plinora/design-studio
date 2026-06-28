@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Оставить отзыв{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+
+    <h1 style="font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 8px;">
+        Оставить отзыв
+    </h1>
+    <p style="color: #6b7280; margin-bottom: 24px;">
+        Оцените работу дизайнера по заказу
+    </p>
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 32px;">
+
+        <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 4px;">{{ order.service.title }}</h3>
+        <p style="color: #6b7280; margin-bottom: 16px;">Дизайнер: {{ order.designer.get_full_name|default:order.designer.username }}</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Оценка (1–5) *</label>
+                <select name="rating" required>
+                    <option value="">Выберите оценку</option>
+                    <option value="5">5 — Отлично</option>
+                    <option value="4">4 — Хорошо</option>
+                    <option value="3">3 — Средне</option>
+                    <option value="2">2 — Плохо</option>
+                    <option value="1">1 — Ужасно</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Текст отзыва *</label>
+                <textarea name="text" rows="5" required placeholder="Напишите, что понравилось, а что можно улучшить..."></textarea>
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%;">
+                Отправить отзыв
+            </button>
+        </form>
+
+        <div style="margin-top: 16px;">
+            <a href="{% url 'my_orders' %}" style="color: #7c3aed; text-decoration: none; font-size: 14px;">
+                ← Назад к заказам
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

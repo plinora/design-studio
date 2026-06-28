@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои объявления{% endblock %}
+
+{% block content %}
+<div style="max-width: 1200px; margin: 0 auto;">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+        <div>
+            <h1 style="font-size: 36px; font-weight: 700; color: #111827; letter-spacing: -1px; margin-bottom: 4px;">
+                Мои объявления
+            </h1>
+            <p style="color: #6b7280;">
+                Все ваши услуги, которые вы разместили на платформе
+            </p>
+        </div>
+        <a href="{% url 'create_service' %}" style="display: inline-block; padding: 12px 30px; border-radius: 40px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s ease; background: #7c3aed; color: #fff; text-decoration: none;">
+            + Создать объявление
+        </a>
+    </div>
+
+    {% if services %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px;">
+            {% for service in services %}
+            <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 20px; overflow: hidden; transition: 0.2s;">
+
+                {% if service.images.all %}
+                    <img src="{{ service.images.first.image.url }}" alt="{{ service.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                {% else %}
+                    <div style="width: 100%; height: 200px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 14px;">
+                        Нет фото
+                    </div>
+                {% endif %}
+
+                <div style="padding: 20px;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #111827; margin-bottom: 4px;">
+                        {{ service.title }}
+                    </h3>
+                    <p style="color: #6b7280; font-size: 14px; margin-bottom: 8px;">
+                        {{ service.get_sphere_display }}
+                    </p>
+                    <p style="font-size: 16px; font-weight: 600; color: #111827; margin-bottom: 12px;">
+                        {{ service.price }} ₽
+                    </p>
+                    <p style="color: #4b5563; font-size: 14px; line-height: 1.5; margin-bottom: 16px;">
+                        {{ service.description|truncatechars:80 }}
+                    </p>
+
+                    <div style="display: inline-block; padding: 4px 16px; border-radius: 40px; font-size: 12px; font-weight: 500; background: {% if service.is_active %}#d1fae5; color: #065f46;{% else %}#f3f4f6; color: #6b7280;{% endif %}; margin-bottom: 16px;">
+                        {% if service.is_active %}Активно{% else %}Неактивно{% endif %}
+                    </div>
+
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="{% url 'service_detail' service.id %}" style="background: #7c3aed; color: #fff; padding: 6px 18px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s;">
+                            Открыть
+                        </a>
+                        <a href="{% url 'edit_service' service.id %}" style="background: #f3f4f6; color: #111827; padding: 6px 18px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s;">
+                            Редактировать
+                        </a>
+                        <a href="{% url 'delete_service' service.id %}" style="background: #fef2f2; color: #dc2626; padding: 6px 18px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s;">
+                            Удалить
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 60px 20px; background: #f9fafb; border-radius: 24px;">
+            <p style="color: #6b7280; font-size: 18px; margin-bottom: 16px;">
+                У вас пока нет объявлений
+            </p>
+            <a href="{% url 'create_service' %}" style="display: inline-block; padding: 12px 30px; border-radius: 40px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s ease; background: #7c3aed; color: #fff; text-decoration: none;">
+                Создать первое объявление
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

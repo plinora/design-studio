@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактировать объявление{% endblock %}
+
+{% block content %}
+<div style="max-width: 640px; margin: 0 auto;">
+
+    <h1 style="font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 4px;">
+        Редактировать объявление
+    </h1>
+    <p style="color: #6b7280; margin-bottom: 24px;">
+        Обновите информацию о своей услуге
+    </p>
+
+    <form method="post" enctype="multipart/form-data" style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 36px;">
+        {% csrf_token %}
+
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Название услуги</label>
+            <input type="text" name="title" value="{{ service.title }}" style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; color: #111827; font-size: 14px;">
+        </div>
+
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Сфера</label>
+            <select name="sphere" style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; color: #111827; font-size: 14px;">
+                <option value="branding" {% if service.sphere == 'branding' %}selected{% endif %}>Брендинг</option>
+                <option value="web" {% if service.sphere == 'web' %}selected{% endif %}>Веб-дизайн</option>
+                <option value="graphic" {% if service.sphere == 'graphic' %}selected{% endif %}>Графический дизайн</option>
+                <option value="interior" {% if service.sphere == 'interior' %}selected{% endif %}>Интерьеры</option>
+                <option value="other" {% if service.sphere == 'other' %}selected{% endif %}>Другое</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Описание</label>
+            <textarea name="description" rows="5" style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; color: #111827; font-size: 14px;">{{ service.description }}</textarea>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Цена (₽)</label>
+            <input type="number" name="price" value="{{ service.price }}" style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; color: #111827; font-size: 14px;">
+        </div>
+
+        <!-- ===== ЗАГРУЗКА ФОТО (до 3 шт) ===== -->
+        <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Фотографии (до 3 шт)</label>
+            <input type="file" name="images" multiple accept="image/*" style="width: 100%; padding: 10px 14px; border-radius: 16px; border: 1px solid #e5e7eb; background: #f9fafb; font-size: 14px;">
+            <small style="color: #6b7280; font-size: 12px;">Можно выбрать до 3 изображений. Первое будет отображаться в каталоге.</small>
+        </div>
+
+        <!-- ===== ТЕКУЩИЕ ФОТО ===== -->
+        {% if service.images.all %}
+            <div style="margin-bottom: 18px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 4px;">Текущие фото</label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    {% for img in service.images.all %}
+                        <div style="position: relative; display: inline-block;">
+                            <img src="{{ img.image.url }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 12px; border: 1px solid #e5e7eb;">
+                            <a href="{% url 'delete_service_image' img.id %}" style="position: absolute; top: -6px; right: -6px; background: #dc2626; color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; text-decoration: none;">×</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <button type="submit" style="display: inline-block; padding: 12px 30px; border-radius: 40px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: 0.2s ease; background: #7c3aed; color: #fff; width: 100%;">
+            Сохранить изменения
+        </button>
+    </form>
+
+    <div style="margin-top: 16px;">
+        <a href="{% url 'service_detail' service.id %}" style="color: #7c3aed; text-decoration: none;">
+            ← Назад к объявлению
+        </a>
+    </div>
+</div>
+{% endblock %}
