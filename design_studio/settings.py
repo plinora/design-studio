@@ -137,3 +137,20 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+import os
+import dj_database_url
+
+# Разрешаем Render открывать сайт
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
+
+# На Render будет использоваться PostgreSQL, локально останется SQLite
+if os.environ.get('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+
+# Настройка статики для Render
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Подключаем WhiteNoise для раздачи статики
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
