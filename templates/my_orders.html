@@ -72,12 +72,18 @@
                         {% elif order.status == 'ready' %}background: #d1fae5; color: #065f46;
                         {% elif order.status == 'completed' %}background: #d1fae5; color: #065f46;
                         {% elif order.status == 'cancelled' %}background: #f3f4f6; color: #6b7280;
-                        {% elif order.status == 'cancelled' %}
-                        Отменён
                         {% endif %}">
                         {{ order.get_status_display }}
                     </span>
-                    <a href="{% url 'chat_detail' order.designer.id %}" style="background: #0284c7; color: #fff; padding: 6px 18px; border-radius: 30px; text-decoration: none; font-size: 13px;">
+
+                    <!-- Кнопка отзыва для завершенных заказов -->
+                    {% if order.status == 'completed' %}
+                        <a href="{% url 'leave_review' order.id %}" style="background: #f59e0b; color: #fff; padding: 6px 18px; border-radius: 30px; text-decoration: none; font-size: 13px; font-weight: 600; text-align: center;">
+                            Оставить отзыв
+                        </a>
+                    {% endif %}
+
+                    <a href="{% url 'chat_detail' order.designer.id %}" style="background: #0284c7; color: #fff; padding: 6px 18px; border-radius: 30px; text-decoration: none; font-size: 13px; text-align: center;">
                         Перейти в чат
                     </a>
                 </div>
