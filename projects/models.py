@@ -210,16 +210,20 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.client.username} → {self.designer.username}: {self.rating}★"
+
+
 class Meta:
     verbose_name = 'Услуга'
     verbose_name_plural = 'Услуги'
     ordering = ['-created_at']
+
 
 @property
 def average_rating(self):
     from django.db.models import Avg
     avg = Review.objects.filter(designer=self.designer).aggregate(Avg('rating'))['rating__avg']
     return round(avg, 1) if avg else 0
+
 
 def __str__(self):
     return self.title
