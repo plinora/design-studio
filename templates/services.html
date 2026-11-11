@@ -22,7 +22,7 @@
             <option value="interior" {% if request.GET.sphere == 'interior' %}selected{% endif %}>Интерьеры</option>
             <option value="other" {% if request.GET.sphere == 'other' %}selected{% endif %}>Другое</option>
         </select>
-        <button type="submit" style="padding: 10px 24px; border-radius: 30px; border: none; background: #7c3aed; color: #fff; font-weight: 600; cursor: pointer;">
+        <button type="submit" style="padding: 10px 24px; border-radius: 30px; border: none; background: #0284c7; color: #fff; font-weight: 600; cursor: pointer;">
             Найти
         </button>
         <a href="{% url 'services_list' %}" style="color: #6b7280; font-size: 14px; text-decoration: none;">Сбросить</a>
@@ -55,7 +55,7 @@
                 </p>
 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <a href="{% url 'service_detail' service.id %}" style="background: #7c3aed; color: #fff; padding: 8px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; text-decoration: none; transition: 0.2s;">
+                    <a href="{% url 'service_detail' service.id %}" style="background: #0284c7; color: #fff; padding: 8px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; text-decoration: none; transition: 0.2s;">
                         Подробнее
                     </a>
 

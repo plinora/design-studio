@@ -5,7 +5,7 @@
 {% block content %}
 <div style="max-width: 700px; margin: 0 auto;">
 
-    <a href="{% url 'chats_list' %}" style="color: #7c3aed; text-decoration: none; font-weight: 500; display: inline-block; margin-bottom: 24px;">
+    <a href="{% url 'chats_list' %}" style="color: #0284c7; text-decoration: none; font-weight: 500; display: inline-block; margin-bottom: 24px;">
         ← Назад к чатам
     </a>
 
@@ -15,7 +15,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 28px;">
             <div style="display: flex; align-items: center; gap: 16px;">
                 <div style="position: relative; width: 48px; height: 48px; flex-shrink: 0;">
-                    <div style="width: 48px; height: 48px; background: #7c3aed; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px;">
+                    <div style="width: 48px; height: 48px; background: #0284c7; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px;">
                         {{ designer.username|make_list|first|upper }}
                     </div>
                     {% if designer.last_seen and designer.last_seen|date:"U" > now|date:"U"|add:"-300" %}
@@ -71,11 +71,11 @@
                     max-width: 80%;
                     padding: 10px 16px;
                     border-radius: 16px;
-                    align-self: {% if msg.sender == request.user %}flex-end; background: #7c3aed; color: #fff;{% else %}flex-start; background: #e5e7eb; color: #111827;{% endif %}
+                    align-self: {% if msg.sender == request.user %}flex-end; background: #0284c7; color: #fff;{% else %}flex-start; background: #e5e7eb; color: #111827;{% endif %}
                 ">
                     {{ msg.text }}
                     {% if msg.file %}
-                        <a href="{{ msg.file.url }}" target="_blank" style="display: block; color: #7c3aed; font-size: 13px; margin-top: 4px;">
+                        <a href="{{ msg.file.url }}" target="_blank" style="display: block; color: #0284c7; font-size: 13px; margin-top: 4px;">
                             📎 Скачать файл
                         </a>
                     {% endif %}
@@ -103,7 +103,7 @@
                 </div>
             {% elif order.status == 'ready' %}
                 <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
-                    <a href="{% url 'confirm_complete_client' order.id %}" style="display: inline-block; padding: 10px 24px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #7c3aed; color: #fff; text-decoration: none;">
+                    <a href="{% url 'confirm_complete_client' order.id %}" style="display: inline-block; padding: 10px 24px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #0284c7; color: #fff; text-decoration: none;">
                         Всё отлично, заказ выполнен
                     </a>
                 </div>
@@ -120,7 +120,7 @@
                 </div>
             {% elif order.status == 'in_progress' %}
                 <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
-                    <a href="{% url 'send_project' order.id %}" style="display: inline-block; padding: 10px 24px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #7c3aed; color: #fff; text-decoration: none;">
+                    <a href="{% url 'send_project' order.id %}" style="display: inline-block; padding: 10px 24px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #0284c7; color: #fff; text-decoration: none;">
                         Отправить проект
                     </a>
                 </div>
@@ -149,7 +149,7 @@
             {% csrf_token %}
             <div style="display: flex; gap: 12px; align-items: center;">
                 <input type="text" name="message" placeholder="Введите сообщение..." style="flex: 1; padding: 12px 20px; border: 1px solid #e5e7eb; border-radius: 40px; background: #f9fafb; font-size: 14px;">
-                <button type="submit" style="display: inline-block; padding: 12px 28px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #7c3aed; color: #fff;">
+                <button type="submit" style="display: inline-block; padding: 12px 28px; border-radius: 30px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; background: #0284c7; color: #fff;">
                     Отправить
                 </button>
             </div>

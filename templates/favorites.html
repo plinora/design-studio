@@ -22,7 +22,7 @@
                 {{ fav.service.get_sphere_display }} • {{ fav.service.price }} ₽
             </p>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <a href="{% url 'service_detail' fav.service.id %}" style="background: #7c3aed; color: #fff; padding: 8px 20px; border-radius: 40px; text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s;">
+                <a href="{% url 'service_detail' fav.service.id %}" style="background: #0284c7; color: #fff; padding: 8px 20px; border-radius: 40px; text-decoration: none; font-size: 14px; font-weight: 500; transition: 0.2s;">
                     Открыть
                 </a>
                 <a href="{% url 'remove_favorite' fav.service.id %}" style="background: transparent; color: #dc2626; padding: 8px 20px; border-radius: 40px; text-decoration: none; font-size: 14px; font-weight: 500; border: 1px solid #fca5a5; transition: 0.2s;">

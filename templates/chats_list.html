@@ -21,7 +21,7 @@
                 <a href="{% url 'chat_detail' chat.id %}" style="display: flex; align-items: center; gap: 16px; padding: 18px 24px; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 20px; text-decoration: none; color: #111827; transition: all 0.2s;">
 
                     <div style="position: relative; width: 48px; height: 48px; flex-shrink: 0;">
-                        <div style="width: 48px; height: 48px; background: #7c3aed; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px;">
+                        <div style="width: 48px; height: 48px; background: #0284c7; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px;">
                             {{ chat.username|make_list|first|upper }}
                         </div>
                         {% if chat.last_seen and chat.last_seen|date:"U" > now|date:"U"|add:"-300" %}
@@ -46,7 +46,7 @@
                         </div>
                     {% endif %}
 
-                    <div style="color: #7c3aed; font-weight: 500; font-size: 15px;">
+                    <div style="color: #0284c7; font-weight: 500; font-size: 15px;">
                         Написать →
                     </div>
                 </a>
